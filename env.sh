@@ -1,5 +1,8 @@
 #!/bin/bash
-set +x
+set -x
+
+
+source functions/vm.sh
 
 declare -A env
 
@@ -28,11 +31,13 @@ controller_nova_volume_ubuntu"
 # 1. shutdown all VM (so there is no Envs running on same KVM simultaneously)
 # stop only those VM enlisted in envs, so we do not stop something else
 running=$(get_vms_running)
+echo running
 for k in ${!env[@]}; do
     # echo ${env[$k]}
     for node in ${env[$k]}; do
+        echo $node
         # stop only those VMs that running
-        if [[ $running = *$node* ]]; then
+        if [[ $running ~= "^$node$" ]]; then
             echo "virsh stop $node"
             # virsh stop $node
         fi
