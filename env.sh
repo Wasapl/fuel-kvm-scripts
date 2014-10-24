@@ -1,10 +1,12 @@
 #!/bin/bash
-set -x
+set +x
 
 
 source functions/vm.sh
 
 declare -A env
+
+env[test]="fuel-4.1___"
 
 env[lvm]="4.1-compute-lvm
 4.1-controller-lvm
@@ -31,13 +33,15 @@ controller_nova_volume_ubuntu"
 # 1. shutdown all VM (so there is no Envs running on same KVM simultaneously)
 # stop only those VM enlisted in envs, so we do not stop something else
 running=$(get_vms_running)
-echo running
+# echo $running
 for k in ${!env[@]}; do
     # echo ${env[$k]}
     for node in ${env[$k]}; do
-        echo $node
+        # echo $node
         # stop only those VMs that running
-        if [[ $running ~= "^$node$" ]]; then
+        regexp="^$node$"
+        echo $regexp
+        if [[ $running =~ $regexp ]]; then
             echo "virsh stop $node"
             # virsh stop $node
         fi
