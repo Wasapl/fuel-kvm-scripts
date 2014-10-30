@@ -1,7 +1,6 @@
 #!/bin/bash
 # set +x
 
-
 source functions/vm.sh
 source functions/snapshot.sh
 
@@ -24,7 +23,7 @@ controller_nova_volume
 compute_nova_volume_ubuntu
 controller_nova_volume_ubuntu"
 
-# declaring array with snapshots 
+# declaring array with revert snapshots 
 declare -A snapshots
 snapshots[4.1-compute-lvm]="snap-4.1-compute-lvm"
 snapshots[4.1-controller-lvm]="snap-4.1-controller-lvm"
@@ -45,8 +44,14 @@ snapshots[controller_nova_volume_ubuntu]="snap-controller_nova_volume_ubuntu"
 
 # Check if $1 is given
 if [ -z $1 ]; then
+    env_names=""
+    for K in "${!env[@]}"; do
+        if [ -z "$env_names" ]; then env_names=$K;
+        else env_names="$env_names | $K";
+        fi;
+    done
     echo "Usage:
-    $0 <Env>"
+    $0 [ $env_names ]"
     exit 1
 fi
 
@@ -55,57 +60,74 @@ if [ ! ${env[$1]+abc} ]; then
     echo "there is no such Env as '$1'"
     exit 1
 fi
-# echo ${env[$1]}
 
+stop_env(){
+    env_name=$1
+    for node in ${env[$env_name]}; do
+        echo stop_vm $node
+        # stop_vm $node
+    done
+}
 
-# 1. shutdown all VM (so there is no Envs running on same KVM simultaneously)
-# stop only those VM enlisted in envs, so we do not stop something else
-running=$(get_vms_running)
-# echo "all running: $running"
-# echo 
-for k in ${!env[@]}; do
-    # echo ${env[$k]}
-    for node in ${env[$k]}; do
-        # stop only those VMs that running
-        if [[ $running = *$node* ]]; then
-            echo "virsh stop $node"
-            # virsh stop $node
+stop_all_env(){
+    # stop only those VM enlisted in envs, so we do not stop something else
+    running=$(get_vms_running)
+    # echo "all running: $running"
+    # echo
+    for k in ${!env[@]}; do
+        # echo ${env[$k]}
+        for node in ${env[$k]}; do
+            # stop only those VMs that running
+            if [[ $running = *$node* ]]; then
+                echo "virsh stop $node"
+                # virsh stop $node
+            fi
+        done
+    done
+}
+
+start_env(){
+    env_name=$1
+    for node in ${env[env_name]}; do
+        echo start_vm $node
+    done
+    #TODO Should poke some api's to make shure it's working
+}
+
+cleanup_env(){
+    env_name=$1
+
+    for node in ${env[$env_name]}; do
+        if [ ! ${snapshots[$node]+abc} ]; then
+            echo "Don't know revert snapshot for '$node'"
+        else
+            imgname=$(get_vm_disk $node)
+            echo snapshot_revert $imgname ${snapshots[$node]}
         fi
     done
-done
+}
+
+make_snapshots_env() {
+    env_name=$1
+    snapshot_name=$2
+    for node in ${env[$env_name]}; do
+        imgname=$(get_vm_disk $node)
+        echo snapshot_create $imgname $snapshot_name
+    done
+}
+
+# 1. shutdown all VM (so there is no Envs running on same KVM simultaneously)
+stop_all_env
 
 # 2. revert VMs to snapshots with clear deploy.
-for node in ${env[$1]}; do
-    if [ ! ${snapshots[$node]+abc} ]; then
-        echo "Cannot find snapshot for '$node'"
-    else
-        imgname=`virsh dumpxml fuel-4.1|grep -A4 "<disk type='file' device='disk'>"|grep "<source file='"|cut -d"'" -f 2`
-        echo snapshot_revert  $imgname ${snapshots[$node]}
-        # snapshot_revert $imgname $snapshotname
-    fi
-done
+cleanup_env $1
 
 
 # 3. start VMs. wait till it starts normally.
-for node in ${env[$1]}; do
-    echo start_vm $node
-    # start_vm $node
-done
-
+start_env $1
 
 # 4. do tests (if any)
 echo "do some tests (if any)"
 
-
-# 5. create snapshots of VMs and make them available as artifacts in Jenkins.
-for node in ${env[$1]}; do
-    echo snapshot_create $node 
-
-done
-
-
-
-
-
-
-
+# 5. create snapshots of VMs so we could make them available as artifacts in Jenkins.
+make_snapshots_env $1 "trololo`date +%F-%H-%M-%S`"
