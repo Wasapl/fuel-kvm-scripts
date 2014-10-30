@@ -1,5 +1,5 @@
 #1/bin/bash
-set -x
+# set -x
 
 # This file contains the functions to manage VMs images through Qemu-img
 

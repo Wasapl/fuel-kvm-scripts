@@ -1,21 +1,9 @@
 #!/bin/bash
-set +x
+# set +x
+
 
 source functions/vm.sh
 source functions/snapshot.sh
-
-array_contains () { 
-    local array="$1[@]"
-    local seeking=$2
-    local in=1
-    for element in "${!array}"; do
-        if [[ $element == $seeking ]]; then
-            in=0
-            break
-        fi
-    done
-    return $in
-}
 
 # declaring array with environments
 declare -A env
@@ -72,20 +60,19 @@ fi
 
 # 1. shutdown all VM (so there is no Envs running on same KVM simultaneously)
 # stop only those VM enlisted in envs, so we do not stop something else
-declare -a running=$(get_vms_running)
-# echo $running
+running=$(get_vms_running)
+# echo "all running: $running"
+# echo 
 for k in ${!env[@]}; do
     # echo ${env[$k]}
     for node in ${env[$k]}; do
-        # echo $node
         # stop only those VMs that running
-        if array_contains running $node ]]; then
+        if [[ $running = *$node* ]]; then
             echo "virsh stop $node"
             # virsh stop $node
         fi
     done
 done
-
 
 # 2. revert VMs to snapshots with clear deploy.
 for node in ${env[$1]}; do
