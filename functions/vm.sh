@@ -197,3 +197,9 @@ stop_vm() {
         virsh destroy $name
     fi
 }
+
+get_vm_disk(){
+    name=$1
+
+    virsh dumpxml $name|grep -A4 "<disk type='file' device='disk'>"|grep "<source file='"|cut -d"'" -f 2
+}
