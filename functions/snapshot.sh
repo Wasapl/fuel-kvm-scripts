@@ -1,4 +1,4 @@
-#1/bin/bash
+#!/bin/bash
 # set -x
 
 # This file contains the functions to manage VMs images through Qemu-img
