@@ -193,7 +193,6 @@ stop_vm() {
     name=$1
 
     if is_vm_running $name; then
-    echo "Stopping VM $name"
         virsh destroy $name
     fi
 }
