@@ -1,3 +1,7 @@
+# This file contains VMs and snapshots names.
+# It could be different from host to host
+
+
 # declaring array with environments
 declare -A env
 env[lvm]="4.1-compute-lvm
