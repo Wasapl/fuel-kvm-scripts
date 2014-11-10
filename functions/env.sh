@@ -5,6 +5,7 @@
 
 stop_env(){
     env_name=$1
+    env=$2
     for node in ${env[$env_name]}; do
         echo "Stopping VM $node"
         stop_vm $node
@@ -12,6 +13,7 @@ stop_env(){
 }
 
 stop_all_env(){
+    env=$1
     # stop only those VM enlisted in envs, so we do not stop something else
     echo "Stopping all VMs..."
     running=$(get_vms_running)
@@ -41,6 +43,7 @@ start_env(){
 
 cleanup_env(){
     env_name=$1
+    env=$2
 
     for node in ${env[$env_name]}; do
         if [ ! ${snapshots[$node]+abc} ]; then
@@ -55,7 +58,8 @@ cleanup_env(){
 
 make_snapshots_env() {
     env_name=$1
-    snapshot_name=$2
+    env=$2
+    snapshot_name=$3
     for node in ${env[$env_name]}; do
         imgname=$(get_vm_disk $node)
         echo "Creating snapshot for '$imgname'..."

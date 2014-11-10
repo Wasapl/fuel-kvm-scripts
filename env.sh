@@ -68,17 +68,17 @@ if [ ! ${env[$1]+abc} ]; then
 fi
 
 # 1. shutdown all VM (so there is no Envs running on same KVM simultaneously)
-stop_all_env
+stop_all_env $env
 
 # 2. revert VMs to snapshots with clear deploy.
-cleanup_env $1
+cleanup_env $1 $env
 
 
 # 3. start VMs. wait till it starts normally.
-start_env $1
+start_env $1 $env
 
 # 4. do tests (if any)
 echo "do some tests (if any)"
 
 # 5. create snapshots of VMs so we could make them available as artifacts in Jenkins.
-make_snapshots_env $1 "trololo`date +%F-%H-%M-%S`"
+make_snapshots_env $1 $env "trololo`date +%F-%H-%M-%S`"
