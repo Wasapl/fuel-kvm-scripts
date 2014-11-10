@@ -34,7 +34,7 @@ start_env(){
     env_name=$1
     env=$2
     echo "Starting env '$env_name'..."
-    for node in ${env[env_name]}; do
+    for node in ${env[$env_name]}; do
         echo "Starting VM $node..."
         start_vm $node
     done
@@ -63,6 +63,7 @@ make_snapshots_env() {
     for node in ${env[$env_name]}; do
         imgname=$(get_vm_disk $node)
         echo "Creating snapshot for '$imgname'..."
+        stop_vm $node
         snapshot_create $imgname $snapshot_name
     done
 }
