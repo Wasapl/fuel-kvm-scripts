@@ -20,14 +20,14 @@ snapshot_revert () {
 }
 
 snapshot_create () {
-    imgname=$2
+    imgname=$1
     snapshotname=$2
     qemu-img snapshot -c $snapshotname $imgname
 }
 
 
 snapshot_delete () {
-    imgname=$2
+    imgname=$1
     snapshotname=$2
     qemu-img snapshot -d $snapshotname $imgname
 }
