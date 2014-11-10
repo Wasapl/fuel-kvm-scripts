@@ -13,9 +13,9 @@ stop_env(){
 
 stop_all_env(){
     # stop only those VM enlisted in envs, so we do not stop something else
+    echo "Stopping all VMs..."
     running=$(get_vms_running)
     # echo "all running: $running"
-    # echo
     for k in ${!env[@]}; do
         # echo ${env[$k]}
         for node in ${env[$k]}; do
@@ -30,6 +30,8 @@ stop_all_env(){
 
 start_env(){
     env_name=$1
+    env=$2
+    echo "Starting env '$env_name'..."
     for node in ${env[env_name]}; do
         echo "Starting VM $node..."
         start_vm $node

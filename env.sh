@@ -23,6 +23,11 @@ env[folsom]="compute_nova_volume
 controller_nova_volume
 compute_nova_volume_ubuntu
 controller_nova_volume_ubuntu"
+env[ih-lvm]="5.1-compute-lvm-1
+5.1-controller-lvm-1
+5.1-compute-lvm-2
+5.1-controller-lvm-2"
+
 
 # declaring array with revert snapshots 
 declare -A snapshots
