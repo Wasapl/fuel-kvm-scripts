@@ -38,4 +38,4 @@ start_env $1 $env
 echo "do some tests (if any)"
 
 # 5. create snapshots of VMs so we could make them available as artifacts in Jenkins.
-make_snapshots_env $1 $env "trololo`date +%F-%H-%M-%S`"
+make_snapshots_env $1 "trololo`date +%F-%H-%M-%S`" $env

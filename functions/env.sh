@@ -58,8 +58,8 @@ cleanup_env(){
 
 make_snapshots_env() {
     env_name=$1
-    env=$2
-    snapshot_name=$3
+    env=$3
+    snapshot_name=$2
     for node in ${env[$env_name]}; do
         imgname=$(get_vm_disk $node)
         echo "Creating snapshot for '$imgname'..."
