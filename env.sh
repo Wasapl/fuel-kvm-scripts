@@ -26,7 +26,7 @@ ENV1_NAME=$1
 ENV2_NAME=$2
 
 # Check if $ENV1_NAME and $ENV2_NAME is given
-if [ -z $ENV1_NAME  || -z $ENV2_NAME ]; then
+if [[  -z $ENV1_NAME || -z $ENV2_NAME  ]]; then
     echo "Usage:
     $0 dest_env source_env"
     exit 1
