@@ -4,7 +4,14 @@
 source functions/vm.sh
 source functions/env.sh
 source functions/snapshot.sh
-source vms.sh
+
+arrays=./$(hostname)-vms.sh
+if [ ! -f $arrays ]; then
+  echo "There is no array declarations for host '$(hostname)'"
+  echo "Please provide it in file '$arrays'"
+  exit 1
+fi
+source ./$(hostname)-vms.sh
 
 
 #creating list of all known envs
