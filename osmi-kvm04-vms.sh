@@ -4,22 +4,26 @@
 
 # declaring array with environments
 declare -A env
-env[lvm]="4.1-compute-lvm
-4.1-controller-lvm
-4.1-compute-lvm-2
+env[lvm-1]="4.1-compute-lvm
+4.1-controller-lvm"
+env[lvm-2]="4.1-compute-lvm-2
 4.1-controller-lvm-2"
-env[lvmnovanet]="4.1-compute-lvm-novanet
-4.1-controller-lvm-novanet
-4.1-compute-lvm-novanet-vlan
+
+env[lvmnovanet-1]="4.1-compute-lvm-novanet
+4.1-controller-lvm-novanet"
+env[lvmnovanet-2]="4.1-compute-lvm-novanet-vlan
 4.1-controller-lvm-novanet-vlan"
-env[ceph]="4.1-compute-ceph
-4.1-controller-ceph
-4.1-compute-ceph-2
+
+env[ceph-1]="4.1-compute-ceph
+4.1-controller-ceph"
+env[ceph-2]="4.1-compute-ceph-2
 4.1-controller-ceph-2"
-env[eceph]="4.1-compute-ceph-ephem
-4.1-controller-ceph-ephem
-4.1-compute-ceph-ephem-2
+
+env[eceph-1]="4.1-compute-ceph-ephem
+4.1-controller-ceph-ephem"
+env[eceph-2]="4.1-compute-ceph-ephem-2
 4.1-controller-ceph-ephem-2"
+
 
 
 # declaring array with revert snapshots 
