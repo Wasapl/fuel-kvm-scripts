@@ -4,21 +4,24 @@
 
 # declaring array with environments
 declare -A env
-env[lvm]="4.1-compute-lvm
-4.1-controller-lvm
-4.1-compute-lvm-2
+env[lvm-1]="4.1-compute-lvm
+4.1-controller-lvm"
+env[lvm-2]="4.1-compute-lvm-2
 4.1-controller-lvm-2"
-env[ceph]="4.1-compute-ceph
-4.1-controller-ceph
-4.1-compute-ceph-2
+
+env[ceph-1]="4.1-compute-ceph
+4.1-controller-ceph"
+env[ceph-2]="4.1-compute-ceph-2
 4.1-controller-ceph-2"
-env[eceph]="4.1-compute-ephem-ceph
-4.1-cont-ephem-ceph
-4.1-compute-ephem-ceph-2
+
+env[eceph-1]="4.1-compute-ephem-ceph
+4.1-cont-ephem-ceph"
+env[eceph-2]="4.1-compute-ephem-ceph-2
 4.1-cont-ephem-ceph-2"
-env[folsom]="compute_nova_volume
-controller_nova_volume
-compute_nova_volume_ubuntu
+
+env[folsom-1]="compute_nova_volume
+controller_nova_volume"
+env[folsom-2]="compute_nova_volume_ubuntu
 controller_nova_volume_ubuntu"
 
 
