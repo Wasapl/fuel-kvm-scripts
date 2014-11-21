@@ -29,6 +29,19 @@ env[ih-lvm-1]="5.1-compute-lvm-1
 env[ih-lvm-2]="5.1-compute-lvm-2
 5.1-controller-lvm-2"
 
+# declaring array with fuel name and fuel env id
+declare -A fuel
+fuel[lvm-1]="fuel-4.1 2"
+fuel[lvm-2]="fuel-4.1 3"
+fuel[ceph-1]="fuel-4.1 "
+fuel[ceph-2]="fuel-4.1 "
+fuel[eceph-1]="fuel-4.1 "
+fuel[eceph-2]="fuel-4.1 "
+fuel[folsom-1]="fuel-4.1 "
+fuel[folsom-2]="fuel-4.1 "
+fuel[ih-lvm-1]="fuel-5.1 1"
+fuel[ih-lvm-2]="fuel-5.1 2"
+
 
 # declaring array with revert snapshots 
 declare -A snapshots

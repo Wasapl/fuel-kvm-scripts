@@ -24,6 +24,17 @@ controller_nova_volume"
 env[folsom-2]="compute_nova_volume_ubuntu
 controller_nova_volume_ubuntu"
 
+# declaring array with fuel name and fuel env id
+declare -A fuel
+fuel[lvm-1]="fuel-4.1 5"
+fuel[lvm-2]="fuel-4.1 6"
+fuel[ceph-1]="fuel-4.1 4"
+fuel[ceph-2]="fuel-4.1 10"
+fuel[eceph-1]="fuel-4.1 8"
+fuel[eceph-2]="fuel-4.1 9"
+fuel[folsom-1]=""
+fuel[folsom-2]=""
+
 
 # declaring array with revert snapshots 
 declare -A snapshots
