@@ -46,20 +46,21 @@ source venv/bin/activate
 cd $path
 if [ ! -f requirements.txt ]; then 
     cat <<ENDOFREQ >requirements.txt
-python-novaclient
-python-cinderclient
-python-glanceclient
-python-keystoneclient
 fabric>=1.8.2
-paramiko>=1.8.0
-oslo.config>=1.2.0
-jinja2
-oslotest
-virtualenv
-sqlalchemy
-python-neutronclient>=2.3.0,<3
 ipaddr
+jinja2
+mysql-connector-python
 nose
+oslo.config>=1.2.0
+oslotest
+paramiko>=1.8.0
+python-cinderclient
+python-glanceclient<=0.13.0
+python-keystoneclient
+python-neutronclient>=2.3.0,<3
+python-novaclient
+sqlalchemy
+virtualenv
 ENDOFREQ
 fi
 pip install -r requirements.txt
