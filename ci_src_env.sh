@@ -22,3 +22,10 @@ if [ ! ${env[${SRC_ENV}-1]+abc} ]; then
     echo "there is no such Env as '$SRC_ENV'"
     exit 1
 fi
+
+cleanup_env ${ENV1_NAME}-1 $env
+start_env ${ENV1_NAME}-1 $env
+
+#test Env operability
+
+#create Objects

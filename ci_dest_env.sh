@@ -22,3 +22,8 @@ if [ ! ${env[${DEST_ENV}-1]+abc} ]; then
     echo "there is no such Env as '$DEST_ENV'"
     exit 1
 fi
+
+cleanup_env ${ENV1_NAME}-2 $env
+start_env ${ENV1_NAME}-2 $env
+
+#test Env operability

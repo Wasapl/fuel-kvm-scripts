@@ -9,3 +9,4 @@ MSNAPSHOT=1406748150
 stop_vm $MVM
 snapshot_revert $MDISK $MSNAPSHOT
 start_vm $MVM
+
