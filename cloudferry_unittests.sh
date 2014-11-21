@@ -44,7 +44,8 @@ source venv/bin/activate
 
 #write some requirements.txt
 cd $path
-cat <<ENDOFREQ >requirements.txt
+if [ ! -f requirements.txt ]; then 
+    cat <<ENDOFREQ >requirements.txt
 python-novaclient
 python-cinderclient
 python-glanceclient
@@ -60,11 +61,14 @@ python-neutronclient>=2.3.0,<3
 ipaddr
 nose
 ENDOFREQ
+fi
 pip install -r requirements.txt
 
 
 #run tests
 cd $path
+#clear all pyc files so python have to create new ones.
+find . -name "*.pyc" -exec rm -rf {} \;
 venv/bin/python --version
 venv/bin/python venv/bin/nosetests -v
 
