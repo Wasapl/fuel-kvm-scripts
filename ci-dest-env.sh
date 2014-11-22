@@ -28,7 +28,7 @@ start_env ${DEST_ENV}-2 $env
 
 #test Env operability
 ssh_options='-oConnectTimeout=5 -oStrictHostKeyChecking=no -oCheckHostIP=no -oUserKnownHostsFile=/dev/null -oRSAAuthentication=no -oPubkeyAuthentication=no'
-read fuelhost envid <<< "${env[${DEST_ENV}-2]}"
+read fuelhost envid <<< "${fuel[${DEST_ENV}-2]}"
 username=root
 password=r00tme
 prompt='root@fuel ~]#'
