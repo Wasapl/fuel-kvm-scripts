@@ -23,8 +23,8 @@ if [ ! ${env[${SRC_ENV}-1]+abc} ]; then
     exit 1
 fi
 
-cleanup_env ${ENV1_NAME}-1 $env
-start_env ${ENV1_NAME}-1 $env
+cleanup_env ${SRC_ENV}-1 $env
+start_env ${SRC_ENV}-1 $env
 
 #test Env operability
 
