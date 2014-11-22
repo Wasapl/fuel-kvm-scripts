@@ -27,3 +27,7 @@ cleanup_env ${ENV1_NAME}-2 $env
 start_env ${ENV1_NAME}-2 $env
 
 #test Env operability
+#ssh fuel
+#fuel health --check smoke --env $envid
+#check output for 'failure'
+#exit 1 if any failures
