@@ -25,6 +25,10 @@ env[folsom-2]="compute_nova_volume_ubuntu
 controller_nova_volume_ubuntu"
 
 # declaring array with fuel name and fuel env id
+# values most consist of:
+#    fuel node hostname (should be resolved from kvm host)
+#    fuel env id
+# separated by space
 declare -A fuel
 fuel[lvm-1]="fuel-4.1 5"
 fuel[lvm-2]="fuel-4.1 6"
