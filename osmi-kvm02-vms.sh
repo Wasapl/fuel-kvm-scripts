@@ -32,8 +32,8 @@ fuel[ceph-1]="fuel-4.1 4"
 fuel[ceph-2]="fuel-4.1 10"
 fuel[eceph-1]="fuel-4.1 8"
 fuel[eceph-2]="fuel-4.1 9"
-fuel[folsom-1]=""
-fuel[folsom-2]=""
+# fuel[folsom-1]=""
+# fuel[folsom-2]=""
 
 
 # declaring array with revert snapshots 
