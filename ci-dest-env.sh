@@ -29,7 +29,9 @@ fi
 cleanup_env $ENV_NAME $env
 start_env $ENV_NAME $env
 
-sleep 120
+echo "sleep for 4 minutes in order to let Env spawn up before testing it"
+sleep 240
+
 
 #test Env operability
 if [ ! ${fuel[$ENV_NAME]+abc} ]; then
@@ -74,5 +76,4 @@ ENDOFEXPECT
         fi
         IFS="${NIFS}"
     done
-
 fi
