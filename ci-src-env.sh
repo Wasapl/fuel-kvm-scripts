@@ -17,23 +17,25 @@ for K in "${!env[@]}"; do
     fi;
 done
 
+ENV_NAME=${SRC_ENV}-1
+
 # Check if $SRC_ENV contains right Env names.
-if [ ! ${env[${SRC_ENV}-1]+abc} ]; then
+if [ ! ${env[$ENV_NAME]+abc} ]; then
     echo "there is no such Env as '$SRC_ENV'"
     exit 1
 fi
 
-cleanup_env ${SRC_ENV}-1 $env
-start_env ${SRC_ENV}-1 $env
+cleanup_env $ENV_NAME $env
+start_env $ENV_NAME $env
 
 sleep 120
 
 #test Env operability
-if [ ! ${fuel[${SRC_ENV}-1]+abc} ]; then
+if [ ! ${fuel[$ENV_NAME]+abc} ]; then
     echo "There is no fuel node for this Env. Skip test Env operability."
 else
     ssh_options='-oConnectTimeout=5 -oStrictHostKeyChecking=no -oCheckHostIP=no -oUserKnownHostsFile=/dev/null -oRSAAuthentication=no -oPubkeyAuthentication=no'
-    read fuelhost envid <<< "${fuel[${SRC_ENV}-1]}"
+    read fuelhost envid <<< "${fuel[$ENV_NAME]}"
     username=root
     password=r00tme
     prompt='root@fuel ~]#'
