@@ -17,7 +17,8 @@ for K in "${!env[@]}"; do
     fi;
 done
 
-ENV_NAME=${1-${SRC_ENV}-1}
+ENV_NAME=${1-${SRC_ENV}}
+ENV_NAME=${ENV_NAME}-1
 
 # Check if $ENV_NAME contains right Env names.
 if [ ! ${env[$ENV_NAME]+abc} ]; then
