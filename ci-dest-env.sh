@@ -17,11 +17,11 @@ for K in "${!env[@]}"; do
     fi;
 done
 
-ENV_NAME=${DEST_ENV}-2
+ENV_NAME=${1-${DEST_ENV}-2}
 
-# Check if $DEST_ENV contains right Env names.
+# Check if $ENV_NAME contains right Env names.
 if [ ! ${env[$ENV_NAME]+abc} ]; then
-    echo "there is no such Env as '$DEST_ENV'"
+    echo "there is no such Env as '$ENV_NAME'"
     exit 1
 fi
 

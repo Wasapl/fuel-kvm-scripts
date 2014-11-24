@@ -17,11 +17,11 @@ for K in "${!env[@]}"; do
     fi;
 done
 
-ENV_NAME=${SRC_ENV}-1
+ENV_NAME=${1-${SRC_ENV}-1}
 
-# Check if $SRC_ENV contains right Env names.
+# Check if $ENV_NAME contains right Env names.
 if [ ! ${env[$ENV_NAME]+abc} ]; then
-    echo "there is no such Env as '$SRC_ENV'"
+    echo "there is no such Env as '$ENV_NAME'"
     exit 1
 fi
 
@@ -67,8 +67,8 @@ ENDOFEXPECT
     for line in $result; do
         IFS="${OIFS}"
         if [[ $line == *failure* ]]; then
-        	IFS="${NIFS}"
-        	echo "There were failures in health check. Exiting."
+            IFS="${NIFS}"
+            echo "There were failures in health check. Exiting."
             exit 1;
         fi
         IFS="${NIFS}"
