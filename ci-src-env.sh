@@ -42,13 +42,13 @@ else
     result=$(
         expect << ENDOFEXPECT
         spawn ssh $ssh_options $username@$fuelhost
-        expect "connect to host" exit
         expect "*?assword:*"
         send "$password\r"
         expect "$prompt"
+        set timeout 360
         send "fuel health --check smoke --env $envid\r"
         expect "$prompt"
-    ENDOFEXPECT
+ENDOFEXPECT
     )
     echo $result
 
