@@ -49,6 +49,7 @@ cd $path
 fabric>=1.8.2
 ipaddr
 jinja2
+--allow-external mysql-connector-python
 mysql-connector-python
 nose
 oslo.config>=1.2.0
