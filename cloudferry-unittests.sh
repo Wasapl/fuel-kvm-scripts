@@ -11,7 +11,7 @@ if [ ! -d $py_path ]; then
 	cd ./src
 	if [ ! -d Python-${PY_VER} ]; then
 		wget http://www.python.org/ftp/python/${PY_VER}/Python-${PY_VER}.tgz
-		tar -zxvf Python-${PY_VER}.tgz
+		tar -zxf Python-${PY_VER}.tgz
 	fi 
 	cd Python-${PY_VER}
 	if [ -d Python-${PY_VER} ]; then
@@ -24,15 +24,16 @@ fi
 
 #install virtualenv
 VENV_VER=1.11.6
+VENV_NAME=virtualenv-${VENV_VER}.tar.gz
 cd $path/src
-wget http://pypi.python.org/packages/source/v/virtualenv/virtualenv-${VENV_VER}.tar.gz
-tar -zxvf virtualenv-${VENV_VER}.tar.gz
+[ -f $VENV_NAME ] || wget http://pypi.python.org/packages/source/v/virtualenv/$VENV_NAME
+tar -zxf $VENV_NAME
 cd virtualenv-${VENV_VER}/
 $py_path/bin/python setup.py install
 
 #install pip
 cd $path/src
-wget https://bootstrap.pypa.io/get-pip.py
+[ -f get-pip.py ] || wget https://bootstrap.pypa.io/get-pip.py
 $py_path/bin/python get-pip.py
 
 
@@ -44,8 +45,7 @@ source venv/bin/activate
 
 #write some requirements.txt
 cd $path
-if [ ! -f requirements.txt ]; then 
-    cat <<ENDOFREQ >requirements.txt
+[  -f requirements.txt ] || cat <<ENDOFREQ >requirements.txt
 fabric>=1.8.2
 ipaddr
 jinja2
@@ -62,7 +62,7 @@ python-novaclient
 sqlalchemy
 virtualenv
 ENDOFREQ
-fi
+
 pip install -r requirements.txt
 
 
