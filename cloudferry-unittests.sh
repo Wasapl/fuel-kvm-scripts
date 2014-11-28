@@ -76,7 +76,7 @@ find . -name "*.pyc" -exec rm -rf {} \;
 venv/bin/python --version
 
 #run pep checker
-flake8--statistics --show-source cloud/ cloudferrylib/ tests/
+flake8 --statistics --show-source cloud/ cloudferrylib/ tests/
 
 export NOSE_REDNOSE=1
 venv/bin/python venv/bin/nosetests -v --force-color
