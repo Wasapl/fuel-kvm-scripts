@@ -12,7 +12,7 @@ if [ ! -d $py_path ]; then
 	if [ ! -d Python-${PY_VER} ]; then
 		wget http://www.python.org/ftp/python/${PY_VER}/Python-${PY_VER}.tgz
 		tar -zxf Python-${PY_VER}.tgz
-	fi 
+	fi
 	cd Python-${PY_VER}
 	if [ -d Python-${PY_VER} ]; then
 		make clean 
