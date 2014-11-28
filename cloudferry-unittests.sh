@@ -47,6 +47,7 @@ source venv/bin/activate
 cd $path
 [  -f requirements.txt ] || cat <<ENDOFREQ >requirements.txt
 fabric>=1.8.2
+flake8
 ipaddr
 jinja2
 --allow-external mysql-connector-python
@@ -60,6 +61,7 @@ python-glanceclient<=0.13.0
 python-keystoneclient
 python-neutronclient>=2.3.0,<3
 python-novaclient
+rednose
 sqlalchemy
 virtualenv
 ENDOFREQ
@@ -72,7 +74,13 @@ cd $path
 #clear all pyc files so python have to create new ones.
 find . -name "*.pyc" -exec rm -rf {} \;
 venv/bin/python --version
-venv/bin/python venv/bin/nosetests -v
+
+#run pep checker
+flake8--statistics --show-source cloud/ cloudferrylib/ tests/
+
+export NOSE_REDNOSE=1
+venv/bin/python venv/bin/nosetests -v --force-color
+
 
 #deactivate venv
 deactivate
