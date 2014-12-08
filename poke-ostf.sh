@@ -1,4 +1,5 @@
-
+fuelhost=fuel-4.1
+envid=3
 path=$PWD
 py_path=$path/.python27
 src_path=$path/.src
@@ -47,7 +48,8 @@ source venv/bin/activate
 [ -f requirements.txt ] && pip install -r requirements.txt
 
 # run ostf tests
-venv/bin/python fuel health --env 1 --checktests ""
+echo SERVER_ADDRESS: $fuelhost >config.yaml
+venv/bin/python fuel health --env $envid --checktests "fuel_health.tests.sanity.test_sanity_compute.SanityComputeTest.test_list_flavors"
 
 #deactivate venv
 deactivate
