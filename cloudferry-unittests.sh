@@ -47,7 +47,7 @@ source venv/bin/activate
 
 #write some requirements.txt
 cd $cf_path
-[  -f requirements.txt ] || cat <<ENDOFREQ >requirements.txt
+[ -f requirements.txt ] || cat <<ENDOFREQ >requirements.txt
 fabric>=1.8.2
 flake8
 ipaddr

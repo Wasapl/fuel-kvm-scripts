@@ -47,7 +47,7 @@ source venv/bin/activate
 [ -f requirements.txt ] && pip install -r requirements.txt
 
 # run ostf tests
-venv/bin/python fuel --env 1 --checktests ""
+venv/bin/python fuel health --env 1 --checktests ""
 
 #deactivate venv
 deactivate
