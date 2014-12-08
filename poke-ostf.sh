@@ -2,7 +2,7 @@
 path=$PWD
 py_path=$path/.python27
 src_path=$path/.src
-cf_path=$path/cloudferry
+prj_path=$path/poke-ostf
 
 #install python2.7.2
 if [ ! -d $py_path ]; then
@@ -39,7 +39,7 @@ $py_path/bin/python get-pip.py
 
 
 #create venv
-cd $cf_path
+cd $prj_path
 $py_path/bin/virtualenv venv --python=$py_path/bin/python2.7
 #activate venv
 source venv/bin/activate
