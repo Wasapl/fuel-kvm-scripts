@@ -12,28 +12,29 @@ if keystone tenant-create --name ${PREFIX}prj --description 'Test project for mi
         keystone user-create --name ${PREFIX}$user --tenant_id $tid --pass PASSWORD 
     done
 
+    OS_TENANT_NAME=${PREFIX}prj
+    OS_USERNAME=${PREFIX}u1
+    OS_PASSWORD=PASSWORD
+
     # 4. create routers: [r1, r2]
     for r in R1 R2; do
-        neutron router-create ${PREFIX}$r
+        quantum router-create ${PREFIX}$r
     done
 
     # 2. create networks [net1, net2]
     i=1
     for net in net1 net2; do
-        neutron net-create --tenant-id $tid ${PREFIX}$net 
+        quantum net-create --tenant-id $tid ${PREFIX}$net 
         # 3. create subnetworks: net1: [subnet1, subnet2] , net2: [subnet3, subnet4]
         for sub in sub1 sub2; do
-            snetid=$( neutron subnet-create --tenant-id $tid demo-net 10.5.$1.0/24 --gateway 10.5.$1.1 --name ${PREFIX}${net}$sub \
+            snetid=$( quantum subnet-create --tenant-id $tid demo-net 10.5.$1.0/24 --gateway 10.5.$1.1 --name ${PREFIX}${net}$sub \
                 | awk 'BEGIN{FS="|"}$2~/ id /{gsub(/^[ \t]+|[ \t]+$/, "", $3);print $3;}' )
-            neutron router-interface-add ${PREFIX}R1 $snetid
-            neutron router-interface-add ${PREFIX}R2 $snetid
+            quantum router-interface-add ${PREFIX}R1 $snetid
+            quantum router-interface-add ${PREFIX}R2 $snetid
         done
         let 'i = i + 1'
     done
 
-    OS_TENANT_NAME=${PREFIX}prj
-    OS_USERNAME=${PREFIX}u1
-    OS_PASSWORD=PASSWORD
 
     # 5. create Security groups [SG1, SG2]
     for sg in SG1 SG2; do
