@@ -1,11 +1,11 @@
-#!/bin/bash
+#!/bin/bash -x
 
 #ssh controller
 
 # 1. create tenants [admin, testtenant]
 PREFIX=DEMO
 if keystone tenant-create --name ${PREFIX}prj --description 'Test project for migration'; then
-    tid=$( keystone tenant-get $PREFIX |awk 'BEGIN{FS="|"}$2~/ id /{gsub(/^[ \t]+|[ \t]+$/, "", $3);print $3;}' )
+    tid=$( keystone tenant-get ${PREFIX}prj |awk 'BEGIN{FS="|"}$2~/ id /{gsub(/^[ \t]+|[ \t]+$/, "", $3);print $3;}' )
 
     #   create couple users 
     for user in u1 u2; do
@@ -30,26 +30,30 @@ if keystone tenant-create --name ${PREFIX}prj --description 'Test project for mi
         done
         let 'i = i + 1'
     done
+
+    OS_TENANT_NAME=${PREFIX}prj
+    OS_USERNAME=${PREFIX}u1
+    OS_PASSWORD=PASSWORD
+
+    # 5. create Security groups [SG1, SG2]
+    for sg in SG1 SG2; do
+        nova secgroup-create ${PREFIX}$sg "${PREFIX} $sg"
+        # 6. create rules in each SG: TCP in and out, UDP in and out
+        nova secgroup-add-rule ${PREFIX}$sg tcp 443 443 0.0.0.0/0
+        nova secgroup-add-rule ${PREFIX}$sg udp 443 443 0.0.0.0/0
+    done
+
+    # 10. create 2 keypair
+    for kp in KP1 KP2; do
+        nova keypair-add ${PREFIX}$kp
+    done
+
+
 fi
 
-
-# 5. create Security groups [SG1, SG2]
-for sg in SG1 SG2; do
-    nova secgroup-create ${PREFIX}$sg "${PREFIX} $sg"
-    # 6. create rules in each SG: TCP in and out, UDP in and out
-    nova secgroup-add-rule ${PREFIX}$sg tcp 443 443 0.0.0.0/0
-    nova secgroup-add-rule ${PREFIX}$sg udp 443 443 0.0.0.0/0
-done
-
-
 # 8. create 2 images
-#glance
+glance image-create --name "Ubuntu 14.04 server-amd64" --disk-format iso --copy-from http://releases.ubuntu.com/14.04/ubuntu-14.04.1-server-amd64.iso --is-public True
 # 9. create 2 volumes
-
-# 10. create 2 keypair
-for kp in KP1 KP2; do
-    nova keypair-add ${PREFIX}$kp
-done
 
 # 11. create flavor with ephem drive, mem 1GB, rootdisk 1G
 nova flavor-create v1.little auto 1024 0 1 --ephemeral 10 
