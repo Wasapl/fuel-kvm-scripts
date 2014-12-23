@@ -1,5 +1,5 @@
-fuelhost=fuel-4.1
-envid=3
+fuelhost=${1-fuel-4.1}
+envid=${2-3}
 path=$PWD
 py_path=$path/.python27
 src_path=$path/.src
@@ -49,7 +49,20 @@ source venv/bin/activate
 
 # run ostf tests
 echo SERVER_ADDRESS: $fuelhost >config.yaml
-venv/bin/python fuel health --env $envid --checktests "fuel_health.tests.sanity.test_sanity_compute.SanityComputeTest.test_list_flavors"
+
+count=0
+cmd="venv/bin/python fuel health --env $envid --checktests 'fuel_health.tests.sanity.test_sanity_compute.SanityComputeTest.test_list_flavors'"
+while ! $cmd; do
+    if [[ "$count" != 5 ]]; then
+        count=$((count+1))
+        echo "sleep 1 sec..."
+        sleep 1
+    else
+        echo "Env ${envid} at ${fuelhost} fails healthchecks... Exiting"
+        exit 1
+    fi
+done
+
 
 #deactivate venv
 deactivate
