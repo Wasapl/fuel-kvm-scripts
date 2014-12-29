@@ -39,3 +39,5 @@ else
     read fuelhost envid <<< "${fuel[$ENV_NAME]}"
     source poke-ostf.sh $fuelhost $envid
 fi
+
+
