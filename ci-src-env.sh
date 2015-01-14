@@ -38,11 +38,7 @@ if [ ! "${fuel[$ENV_NAME]+abc}" ]; then
     echo "There is no fuel node for this Env. Skip test Env operability."
 else
     read fuelhost envid <<< "${fuel[$ENV_NAME]}"
-<<<<<<< HEAD
-    source poke-ostf.sh $fuelhost $envid
-=======
     source poke-ostf.sh "$fuelhost" "$envid"
->>>>>>> c0003eefe9d49a2c6673f050f241877a5bfa70f7
 fi
 
 
