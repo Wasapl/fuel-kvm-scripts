@@ -28,16 +28,19 @@ fi
 VENV_VER=1.11.6
 VENV_NAME=virtualenv-${VENV_VER}.tar.gz
 cd "$src_path"
-[ -f $VENV_NAME ] || wget http://pypi.python.org/packages/source/v/virtualenv/$VENV_NAME
-tar -zxf $VENV_NAME
-cd virtualenv-${VENV_VER}/
-"$py_path/bin/python" setup.py install
+if [ ! -f $VENV_NAME ]; then
+	wget http://pypi.python.org/packages/source/v/virtualenv/$VENV_NAME
+	tar -zxf $VENV_NAME
+	cd virtualenv-${VENV_VER}/
+	"$py_path/bin/python" setup.py install
+fi
 
 #install pip
 cd "$src_path"
-[ -f get-pip.py ] || wget https://bootstrap.pypa.io/get-pip.py
-"$py_path/bin/python" get-pip.py
-
+if [ ! -f get-pip.py ]; then
+	wget https://bootstrap.pypa.io/get-pip.py
+	"$py_path/bin/python" get-pip.py
+fi
 
 #create venv
 cd "$prj_path"
