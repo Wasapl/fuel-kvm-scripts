@@ -52,7 +52,7 @@ echo SERVER_ADDRESS: "$fuelhost" >config.yaml
 
 count=0
 cmd="venv/bin/python fuel health --env $envid --checktests 'fuel_health.tests.sanity.test_sanity_compute.SanityComputeTest.test_list_flavors'"
-while ! "${cmd[@]}"; do
+until ${cmd}; do
     if [[ "$count" != 5 ]]; then
         count=$((count+1))
         echo "sleep 1 sec..."
